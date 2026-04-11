@@ -6,11 +6,6 @@ name = "Ey App"
 # One of: "Badge", "Music", "Media", "Apps", "Games"
 category = "Apps"
 
-# OPTIONAL: Same as above, for compatibility with older firmware
-# versions that can't handle categories introduced afterwards.
-# One of: "Badge", "Music", "Apps"
-# menu = "Apps"
-
 # OPTIONAL: If your app prefers wifi to be off or on when entering.
 # Useful if you want more resources (false) or need wifi (true).
 # Remove if you don't want to change wifi state!
@@ -37,4 +32,4 @@ description = "A northerner simulator."
 # increased, we interpret this as a new version being released.
 #
 # Version number must be an integer!
-version = "8"
+version = "9"

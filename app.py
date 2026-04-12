@@ -120,6 +120,14 @@ class EyApp(app.App):
         # Disable firmware led pattern
         eventbus.emit(PatternDisable())
 
+        # Settings might have changed while we've been paused
+        self.name = settings.get("name")
+        if not self.name:
+            self.name = "Yobbo"
+        self.brightness = settings.get("pattern_brightness")
+        if not self.brightness:
+            self.brightness = 0.1
+
     async def _pause(self, event: RequestForegroundPopEvent):
         # Renable firmware led pattern when we minimise
         eventbus.emit(PatternEnable())

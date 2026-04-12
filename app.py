@@ -270,6 +270,7 @@ class EyApp(app.App):
             ctx.rgb(1, 1, 1).move_to(0, -60).text(f"{self.frame_time_avg} us")
         for i in range(12):
             tildagonos.leds[i+1] = self.led
+        tildagonos.leds.write()
 
 
 __app_export__ = EyApp

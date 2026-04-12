@@ -20,38 +20,39 @@ ppi = display_x / display_height_inches
 # Font size
 one_pt = ppi / 72
 
-start_greets = [
-    "Ey Up",
-    "How Do",
-    "Now Then",
-    "Wotcha",
-    "Alreet",
-    "G'day",
-    "Ar kid",
-    "<T>",
-    "<T> is it?",
-]
-intro_greets = [
-    "<N> innit",
-    "Ahm <N>",
-    "I'm <N>",
-    "Name's <N>",
-    "<N> 'ere",
-    "It's <N>",
-]
-end_greets = [
-    "Ow a tha?",
-    "Ah thee?",
-    "Orate?",
-    "Yareet?",
-    "Fettlin well?",
-    "Ow's tha deein?",
-    "Put kettle on",
-    "Tha mashin?",
-    "Get mashin",
-    "Went a brew?",
-    "Gerron wi yer",
-    "Wot's fer tea?",
+greetings = [
+    [
+        "Ey Up",
+        "How Do",
+        "Now Then",
+        "Wotcha",
+        "Alreet",
+        "G'day",
+        "Ar kid",
+        "<T>",
+        "<T> is it?",
+    ], [
+        "<N> innit",
+        "Ahm <N>",
+        "I'm <N>",
+        "Name's <N>",
+        "<N> 'ere",
+        "It's <N>",
+    ], [
+        "Ow a tha?",
+        "Ah thee?",
+        "Orate?",
+        "Yareet?",
+        "Fettlin well?",
+        "Ow's tha deein?",
+        "Put kettle on",
+        "Tha mashin?",
+        "Get mashin",
+        "Went a brew?",
+        "Gerron wi yer",
+        "Wot's fer tea?",
+        "Wekkin 'ard?",
+    ]
 ]
 
 class EyApp(app.App):
@@ -63,16 +64,14 @@ class EyApp(app.App):
         if not self.name:
             self.name = "Yobbo"
         self.elapsed = 0
-        self.text_accum = 0
+        self.text_accum = [0,0,0]
         self.chaos = self._load()
         self._update_chaos(0)
         self.col_hue = 0
         self.led_hue = 127
         self.col = EyApp.hsl_to_rgb(self.col_hue, 255, 255)
         self.led = EyApp.hsl_to_rgb(self.led_hue, 191, 3, False)
-        self.greet0 = 0
-        self.greet1 = 0
-        self.greet2 = 0
+        self.greets = [0,0,0]
         self.main_font_size = 14
         self.level_font_size = 6
 
@@ -153,13 +152,14 @@ class EyApp(app.App):
         self.elapsed = self.elapsed + (delta / (12 - self.chaos))
 
         # Choose new greetings
-        self.text_accum = self.text_accum + delta
-        if self.text_accum > self.text_delay:
-            self.text_accum = self.text_accum - self.text_delay
-            if self.chaos > 0:
-                self.greet0 = random.randrange(len(start_greets))
-                self.greet1 = random.randrange(len(intro_greets))
-                self.greet2 = random.randrange(len(end_greets))
+        self.text_accum = [x + delta for x in self.text_accum]
+        for idx in range(len(self.text_accum)):
+            accum = self.text_accum[idx]
+            delay = self.text_delay + 25 * idx
+            if accum > delay:
+                self.text_accum[idx] = accum - delay
+                if self.chaos > 0:
+                    self.greets[idx] = random.randrange(len(greetings[idx]))
 
         # Choose new text colour
         if self.chaos > 0:
@@ -242,21 +242,21 @@ class EyApp(app.App):
         y_factor = math.sin(math.radians(self.elapsed % 360)) * ratio
         offset = (20 * x_factor) + random.randrange(1 + 2 * self.chaos)
         offsety = -20 + (5 * y_factor) + random.randrange(1 + 1 * self.chaos)
-        start_greet = start_greets[self.greet0].replace("<T>", time_greet)
+        start_greet = greetings[0][self.greets[0]].replace("<T>", time_greet)
         ctx.rgb(*self.col).move_to(offset, offsety).text(start_greet)
 
         x_factor = math.cos(math.radians((self.elapsed % 360) + 120)) * ratio
         y_factor = math.sin(math.radians((self.elapsed % 360) + 120)) * ratio
         offset = (20 * x_factor) + random.randrange(1 + 2 * self.chaos)
         offsety = 10 + (5 * y_factor) + random.randrange(1 + 1 * self.chaos)
-        intro_greet = intro_greets[self.greet1].replace("<N>", self.name)
+        intro_greet = greetings[1][self.greets[1]].replace("<N>", self.name)
         ctx.rgb(*self.col).move_to(offset, offsety).text(intro_greet)
 
         x_factor = math.cos(math.radians((self.elapsed % 360) + 240)) * ratio
         y_factor = math.sin(math.radians((self.elapsed % 360) + 240)) * ratio
         offset = (20 * x_factor) + random.randrange(1 + 2 * self.chaos)
         offsety = 40 + (5 * y_factor) + random.randrange(1 + 1 * self.chaos)
-        end_greet = end_greets[self.greet2].replace("<T>", time_greet)
+        end_greet = greetings[2][self.greets[2]].replace("<T>", time_greet)
         ctx.rgb(*self.col).move_to(offset, offsety).text(end_greet)
 
         ctx.font_size = self.level_font_size * one_pt

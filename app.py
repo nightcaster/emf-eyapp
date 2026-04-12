@@ -186,10 +186,12 @@ class EyApp(app.App):
         # Increase chaos
         if self.button_states.get(BUTTON_TYPES["UP"]):
             self._update_chaos(1)
+            self.button_states.clear()
 
         # Decrease chaos
         if self.button_states.get(BUTTON_TYPES["DOWN"]):
             self._update_chaos(-1)
+            self.button_states.clear()
 
         # Show framerate
         if self.button_states.get(BUTTON_TYPES["RIGHT"]):
@@ -201,10 +203,7 @@ class EyApp(app.App):
         self.main_font_size = 14 + (random.randrange(self.chaos + 1) / 2)
 
     def _update_chaos(self, direction):
-        if direction > 0 and self.chaos < 11:
-            self.chaos = self.chaos + 1
-        if direction < 0 and self.chaos > 0:
-            self.chaos = self.chaos - 1
+        self.chaos = max(0, min(self.chaos + 1 * direction, 11))
         self.text_delay = (12 - self.chaos) * 350
         self.col_speed = self.chaos ** 2
         self.led_speed = self.chaos ** 3

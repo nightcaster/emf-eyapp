@@ -14,7 +14,7 @@ Git tha Tildagon wekkin' as a badge fut gatherin, s' folk can tell thi from Adam
 
 * A/D buttons: Increase/Decrease chaos level.
 * B button: Show framerate.
-* C button: Suspend Ey App and return to the Tildagon main menu.
+* F button: Suspend Ey App and return to the Tildagon main menu.
 
 ### Demo
 

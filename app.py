@@ -30,7 +30,7 @@ greetings = [
         "G'day",
         "Ar kid",
         "<T>",
-        "<T> is it?",
+        "Tha Reet",
     ], [
         "<N> innit",
         "Ahm <N>",
@@ -52,6 +52,7 @@ greetings = [
         "Gerron wi yer",
         "Wot's fer tea?",
         "Wekkin 'ard?",
+        "Gan tut pub?",
     ]
 ]
 
@@ -63,6 +64,9 @@ class EyApp(app.App):
         self.name = settings.get("name")
         if not self.name:
             self.name = "Yobbo"
+        self.brightness = settings.get("pattern_brightness")
+        if not self.brightness:
+            self.brightness = 0.1
         self.elapsed = 0
         self.text_accum = [0,0,0]
         self.chaos = self._load()
@@ -70,7 +74,7 @@ class EyApp(app.App):
         self.col_hue = 0
         self.led_hue = 127
         self.col = EyApp.hsl_to_rgb(self.col_hue, 255, 255)
-        self.led = EyApp.hsl_to_rgb(self.led_hue, 191, 3, False)
+        self.led = EyApp.hsl_to_rgb(self.led_hue, 191, int(255 * self.brightness), False)
         self.greets = [0,0,0]
         self.main_font_size = 14
         self.level_font_size = 6
@@ -173,7 +177,7 @@ class EyApp(app.App):
             self.led_hue = (self.led_hue - led_inc)
             if (self.led_hue < 0):
                 self.led_hue = self.led_hue + 255
-            self.led = EyApp.hsl_to_rgb(math.floor(self.led_hue), 191, 3, False)
+            self.led = EyApp.hsl_to_rgb(math.floor(self.led_hue), 191, int(255 * self.brightness), False)
 
         # Exit the app
         if self.button_states.get(BUTTON_TYPES["CANCEL"]):

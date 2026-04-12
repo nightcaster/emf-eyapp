@@ -15,3 +15,13 @@ Git tha Tildagon wekkin' as a badge fut gatherin, s' folk can tell thi from Adam
 * A/D buttons: Increase/Decrease chaos level.
 * B button: Show framerate.
 * C button: Suspend Ey App and return to the Tildagon main menu.
+
+### Demo
+
+[eyapp_demo.webm](https://github.com/user-attachments/assets/cf7cde10-bfc4-4b76-a06b-6aff20e4587b)
+
+The 3D printed Tildagon case is by [Nightcaster](https://www.instagram.com/nightcaster.uk/), plans [available from Printables](https://www.printables.com/model/1643166-emf-tildagon-badge-case-emf-2024-badge).
+
+### License
+
+This repo is MIT licensed.

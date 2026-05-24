@@ -4,7 +4,7 @@ name = "Ey App"
 
 # The submenu where your app should appear.
 # One of: "Badge", "Music", "Media", "Apps", "Games"
-category = "Apps"
+category = "Badge"
 
 # OPTIONAL: If your app prefers wifi to be off or on when entering.
 # Useful if you want more resources (false) or need wifi (true).
@@ -32,4 +32,4 @@ description = "A Name Badge for Northerners"
 # increased, we interpret this as a new version being released.
 #
 # Version number must be an integer!
-version = "10"
+version = "11"

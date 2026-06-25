@@ -20,7 +20,7 @@ Git tha Tildagon wekkin' as a badge fut gatherin, s' folk can tell thi from Adam
 
 ### From App Store
 
-Available from the app store: https://apps.badge.emfcamp.org/apps/32412314/
+Available from the app store: https://apps.badge.emfcamp.org/apps/11001423/
 
 ### Local Install
 

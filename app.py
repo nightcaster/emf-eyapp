@@ -5,11 +5,14 @@ import settings
 import math
 import time
 
+from app_components.background import Background as bg
 from events.input import Buttons, BUTTON_TYPES
 from tildagonos import tildagonos
 from system.eventbus import eventbus
 from system.patterndisplay.events import *
 from system.scheduler.events import *
+
+from micropython import const
 
 # Display
 display_x = const(240)
@@ -77,7 +80,7 @@ class EyApp(app.App):
         self.led = EyApp.hsl_to_rgb(self.led_hue, 191, int(255 * self.brightness), False)
         self.greets = [0,0,0]
         self.main_font_size = 14
-        self.level_font_size = 6
+        self.level_font_size = 5
 
         self.show_perf = False
         self.current_time = 0
@@ -161,6 +164,7 @@ class EyApp(app.App):
         return rgb
 
     def update(self, delta):
+        bg.update(delta)
         self.elapsed = self.elapsed + (delta / (12 - self.chaos))
 
         # Choose new greetings
@@ -236,8 +240,9 @@ class EyApp(app.App):
             self.frame_time_avg = int(sum(self.frame_time_samples) / 5)
             self.fps_avg = sum(self.fps_samples) / 5
 
+        bg.draw(ctx)
+
         ctx.text_align = ctx.CENTER
-        ctx.rgb(0,0,0).rectangle(-120,-120,240,240).fill()
         ratio = self.chaos / 12
 
         ctx.font_size = self.main_font_size * one_pt
